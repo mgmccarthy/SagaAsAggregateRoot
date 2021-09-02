@@ -11,6 +11,7 @@ namespace SagaAsAggregateRoot.Endpoint
 
         public async Task Handle(ResupplyThresholdReached message, IMessageHandlerContext context)
         {
+            Log.Info("");
             Log.Info("Handling ResupplyThresholdReached and creating shipment to resupply site");
             Log.Info($"Publishing KitShipped with KitId: {message.KitId} and Quantity: 5");
             await context.Publish<KitShipped>(ks => { ks.KitId = message.KitId; ks.Quantity = 5; });

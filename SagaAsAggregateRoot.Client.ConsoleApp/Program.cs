@@ -23,18 +23,20 @@ namespace SagaAsAggregateRoot.Client.ConsoleApp
 
             var endpointInstance = await Endpoint.Start(endpointConfiguration).ConfigureAwait(false);
 
+            Console.WriteLine("hit any key to start assigning kits to subjects");
+            Console.ReadKey();
+
             var kitId = Guid.NewGuid();
             var shipmentId = Guid.NewGuid();
 
             //send this to get saga up and running and set intial quantity
-            Console.WriteLine($"Sending AcknowledgeShipment with KitId: {kitId}, Quantity: 10, ShipmentId: {shipmentId}");
-            await endpointInstance.Send(new AcknowledgeShipment { KitId = kitId, Quantity = 10, ShipmentId = shipmentId });
+            await endpointInstance.Send(new AcknowledgeShipment { KitId = kitId, Quantity = 5, ShipmentId = shipmentId });
 
             while (true)
             {
                 Console.WriteLine("Sending AssignKitToSubject");
                 await endpointInstance.Send(new AssignKitToSubject { KitId = kitId, SubjectId = Guid.NewGuid() });
-                await Task.Delay(5000);
+                await Task.Delay(7000);
             }
         }
     }

@@ -21,6 +21,7 @@ namespace SagaAsAggregateRoot.Endpoint
 
         public Task Handle(ShipmentAcknowledged message, IMessageHandlerContext context)
         {
+            Log.Info("");
             Log.Info($"Handling ShipmentAcknowledged in saga with ShipmentId: {message.ShipmentId}, KitId: {message.KitId} and Quantity: {message.Quantity}");
             Log.Info($"Data.Id: {Data.Id}, Data.Originator: {Data.Originator}, Data.Originator: {Data.OriginalMessageId}");
             Data.AvailableQuantity += message.Quantity;
@@ -29,6 +30,7 @@ namespace SagaAsAggregateRoot.Endpoint
 
         public async Task Handle(KitAssignedToSubject message, IMessageHandlerContext context)
         {
+            Log.Info("");
             Log.Info($"Handling KitAssignedToSubject with available quantity: {Data.AvailableQuantity}");
             
             Log.Info($"Decrementing available quantity by one");
