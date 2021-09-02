@@ -1,0 +1,19 @@
+﻿using System.Threading.Tasks;
+using NServiceBus;
+using NServiceBus.Logging;
+using SagaAsAggregateRoot.Shared.Messages.Commands;
+using SagaAsAggregateRoot.Shared.Messages.Events;
+
+namespace SagaAsAggregateRoot.Endpoint
+{
+    public class AcknowledgeShipmentHandler : IHandleMessages<AcknowledgeShipment>
+    {
+        private static readonly ILog Log = LogManager.GetLogger<AcknowledgeShipmentHandler>();
+
+        public Task Handle(AcknowledgeShipment message, IMessageHandlerContext context)
+        {
+            Log.Info($"Handling AcknowledgeShipment and publishing ShipmentAcknowledged with ShipmentId: {message.ShipmentId}, KitId: {message.KitId}, Quantity: {message.Quantity}");
+            return context.Publish<ShipmentAcknowledged>(sa => { sa.ShipmentId = message.ShipmentId; sa.KitId = message.KitId; sa.Quantity = message.Quantity; });
+        }
+    }
+}
