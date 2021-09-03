@@ -3,7 +3,7 @@ using NServiceBus;
 using NServiceBus.Logging;
 using SagaAsAggregateRoot.Shared.Messages.Events;
 
-namespace SagaAsAggregateRoot.Endpoint
+namespace SagaAsAggregateRoot.Endpoint.Handlers
 {
     public class ResupplyThresholdHasBeenReachedHandler : IHandleMessages<ResupplyThresholdReached>
     {
@@ -13,8 +13,8 @@ namespace SagaAsAggregateRoot.Endpoint
         {
             Log.Info("");
             Log.Info("Handling ResupplyThresholdReached and creating shipment to resupply site");
-            Log.Info($"Publishing KitShipped with KitId: {message.KitId} and Quantity: 5");
-            await context.Publish<KitShipped>(ks => { ks.KitId = message.KitId; ks.Quantity = 5; });
+            Log.Info($"Publishing KitsShipped with KitId: {message.KitId} and Quantity: 5");
+            await context.Publish<KitsShipped>(ks => { ks.KitId = message.KitId; ks.Quantity = 5; });
         }
     }
 }

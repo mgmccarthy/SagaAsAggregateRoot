@@ -49,7 +49,5 @@ namespace SagaAsAggregateRoot.Endpoint
             public Guid KitId { get; set; }
             public int AvailableQuantity { get; set; }
         }
-
-        public class TimeoutState { }
     }
 }

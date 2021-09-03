@@ -4,7 +4,7 @@ using NServiceBus.Logging;
 using SagaAsAggregateRoot.Shared.Messages.Commands;
 using SagaAsAggregateRoot.Shared.Messages.Events;
 
-namespace SagaAsAggregateRoot.Endpoint
+namespace SagaAsAggregateRoot.Endpoint.Handlers
 {
     public class AcknowledgeShipmentHandler : IHandleMessages<AcknowledgeShipment>
     {

@@ -2,7 +2,7 @@
 using NServiceBus;
 using SagaAsAggregateRoot.Shared.Messages.Events;
 
-namespace SagaAsAggregateRoot.Endpoint
+namespace SagaAsAggregateRoot.Endpoint.Handlers
 {
     public class AssignKitToSubjectHandler : IHandleMessages<Shared.Messages.Commands.AssignKitToSubject>
     {
