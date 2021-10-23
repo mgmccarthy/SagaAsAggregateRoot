@@ -3,7 +3,7 @@ using NServiceBus;
 using NServiceBus.Logging;
 using SagaAsAggregateRoot.Shared.Messages.Events;
 
-namespace SagaAsAggregateRoot.Endpoint.Handlers
+namespace SagaAsAggregateRoot.Fulfillment.Endpoint.Handlers
 {
     public class ResupplyThresholdHasBeenReachedHandler : IHandleMessages<ResupplyThresholdReached>
     {

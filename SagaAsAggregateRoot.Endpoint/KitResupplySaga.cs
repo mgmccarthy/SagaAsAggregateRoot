@@ -24,7 +24,6 @@ namespace SagaAsAggregateRoot.Endpoint
         {
             Log.Info("");
             Log.Info($"Handling ShipmentAcknowledged in saga with ShipmentId: {message.ShipmentId}, KitId: {message.KitId} and Quantity: {message.Quantity}");
-            Log.Info($"Data.Id: {Data.Id}, Data.Originator: {Data.Originator}, Data.Originator: {Data.OriginalMessageId}");
             Data.AvailableQuantity += message.Quantity;
             Data.LastShipmentAcknowledgedReceived = DateTime.Now;
             return Task.CompletedTask;
@@ -37,7 +36,6 @@ namespace SagaAsAggregateRoot.Endpoint
 
             //TODO: check for 0 quantity and send message to stop kit assignbment and site (handler would do something in db and then publish an event that says SiteIsUnableToAssignKits)
             
-            Log.Info($"Decrementing available quantity by one");
             Data.AvailableQuantity -= 1;
             Log.Info($"Available quantity is now {Data.AvailableQuantity}");
 
