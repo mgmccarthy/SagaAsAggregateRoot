@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Threading.Tasks;
 using NServiceBus;
 using NServiceBus.Logging;
@@ -25,6 +26,7 @@ namespace SagaAsAggregateRoot.Endpoint
             Log.Info($"Handling ShipmentAcknowledged in saga with ShipmentId: {message.ShipmentId}, KitId: {message.KitId} and Quantity: {message.Quantity}");
             Log.Info($"Data.Id: {Data.Id}, Data.Originator: {Data.Originator}, Data.Originator: {Data.OriginalMessageId}");
             Data.AvailableQuantity += message.Quantity;
+            Data.LastShipmentAcknowledgedReceived = DateTime.Now;
             return Task.CompletedTask;
         }
 
@@ -32,15 +34,27 @@ namespace SagaAsAggregateRoot.Endpoint
         {
             Log.Info("");
             Log.Info($"Handling KitAssignedToSubject with available quantity: {Data.AvailableQuantity}");
+
+            //TODO: check for 0 quantity and send message to stop kit assignbment and site (handler would do something in db and then publish an event that says SiteIsUnableToAssignKits)
             
             Log.Info($"Decrementing available quantity by one");
             Data.AvailableQuantity -= 1;
-
             Log.Info($"Available quantity is now {Data.AvailableQuantity}");
+
             if (Data.AvailableQuantity <= kitResupplyThreshold)
             {
-                Log.Info("Resupply threshold has been reached, publishing ResupplyThresholdReached");
-                await context.Publish<ResupplyThresholdReached>(rtr => { rtr.KitId = Data.KitId; });
+                //did we receive a ShipmentAcknowledged message based on the last ResupplyThresholdReached sent? If not, then there is a fulfillment problem, and we should keep assigning the remaing site supply
+                if (Data.LastShipmentAcknowledgedReceived < Data.LastResupplyThresholdReachedSent)
+                {
+                    //publish an event that this situation is occuring
+                    await context.Publish<SiteSupplyIsBelowResupplyThreshold>(x => { x.AvailableQuantity = Data.AvailableQuantity; });
+                }
+                else
+                {
+                    Log.Info("Resupply threshold has been reached, publishing ResupplyThresholdReached");
+                    await context.Publish<ResupplyThresholdReached>(rtr => { rtr.KitId = Data.KitId; });
+                    Data.LastResupplyThresholdReachedSent = DateTime.Now;
+                }
             }
         }
 
@@ -48,6 +62,8 @@ namespace SagaAsAggregateRoot.Endpoint
         {
             public Guid KitId { get; set; }
             public int AvailableQuantity { get; set; }
+            public DateTime LastShipmentAcknowledgedReceived { get; set; }
+            public DateTime LastResupplyThresholdReachedSent { get; set; }
         }
     }
 }
