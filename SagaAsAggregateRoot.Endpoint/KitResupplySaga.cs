@@ -34,8 +34,13 @@ namespace SagaAsAggregateRoot.Endpoint
             Log.Info("");
             Log.Info($"Handling KitAssignedToSubject with available quantity: {Data.AvailableQuantity}");
 
-            //TODO: check for 0 quantity and send message to stop kit assignbment and site (handler would do something in db and then publish an event that says SiteIsUnableToAssignKits)
-            
+            if (Data.AvailableQuantity == 0) //stop all kit assignment at this site!
+            {
+                Log.Error("Site is below resupply threshold, publishing SiteSupplyIsBelowResupplyThreshold");
+                await context.Publish<SiteSupplyIsZero>();
+                return;
+            }
+
             Data.AvailableQuantity -= 1;
             Log.Info($"Available quantity is now {Data.AvailableQuantity}");
 
@@ -45,6 +50,7 @@ namespace SagaAsAggregateRoot.Endpoint
                 if (Data.LastShipmentAcknowledgedReceived < Data.LastResupplyThresholdReachedSent)
                 {
                     //publish an event that this situation is occuring
+                    Log.Info("Site is below resupply threshold, publishing SiteSupplyIsBelowResupplyThreshold");
                     await context.Publish<SiteSupplyIsBelowResupplyThreshold>(x => { x.AvailableQuantity = Data.AvailableQuantity; });
                 }
                 else
