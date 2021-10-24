@@ -5,4 +5,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="NServiceBus" Version="7.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SagaAsAggregateRoot.Shared\SagaAsAggregateRoot.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

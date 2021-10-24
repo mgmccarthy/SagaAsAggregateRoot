@@ -9,6 +9,7 @@ namespace SagaAsAggregateRoot.Endpoint.Handlers
         public Task Handle(Shared.Messages.Commands.AssignKitToSubject message, IMessageHandlerContext context)
         {
             //stamp out in db
+
             return context.Publish<KitAssignedToSubject>(kats => { kats.KitId = message.KitId; });
         }
     }

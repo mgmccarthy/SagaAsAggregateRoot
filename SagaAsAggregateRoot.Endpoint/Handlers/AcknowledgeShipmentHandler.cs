@@ -12,7 +12,7 @@ namespace SagaAsAggregateRoot.Endpoint.Handlers
 
         public Task Handle(AcknowledgeShipment message, IMessageHandlerContext context)
         {
-            Log.Info($"Handling AcknowledgeShipment and publishing ShipmentAcknowledged with ShipmentId: {message.ShipmentId}, KitId: {message.KitId}, Quantity: {message.Quantity}");
+            Log.Info($"Handling AcknowledgeShipment and publishing ShipmentAcknowledged with Quantity 5.");
             return context.Publish<ShipmentAcknowledged>(sa => { sa.ShipmentId = message.ShipmentId; sa.KitId = message.KitId; sa.Quantity = message.Quantity; });
         }
     }
