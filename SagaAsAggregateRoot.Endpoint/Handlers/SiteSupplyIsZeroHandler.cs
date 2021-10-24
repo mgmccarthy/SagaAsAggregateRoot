@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using NServiceBus;
 using NServiceBus.Logging;
 using SagaAsAggregateRoot.Shared.Messages.Events;
@@ -14,7 +11,7 @@ namespace SagaAsAggregateRoot.Endpoint.Handlers
 
         public Task Handle(SiteSupplyIsZero message, IMessageHandlerContext context)
         {
-            Log.Error("Site supply is at 0");
+            Log.Error("Site supply is at 0, shutting down kit assignment at site.");
             return Task.CompletedTask;
         }
     }

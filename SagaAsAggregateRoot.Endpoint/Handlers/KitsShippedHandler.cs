@@ -14,7 +14,7 @@ namespace SagaAsAggregateRoot.Endpoint.Handlers
         public Task Handle(KitsShipped message, IMessageHandlerContext context)
         {
             var shipmentId = Guid.NewGuid();
-            Log.Info($"Handling KitsShipped and sending AcknowledgeShipment with ShipmentId: {shipmentId}, KitId: {message.KitId} and Quantity: {message.Quantity}");
+            Log.Info($"Handling KitsShipped and sending AcknowledgeShipment");
             return context.SendLocal(new AcknowledgeShipment { ShipmentId = shipmentId, KitId = message.KitId, Quantity = message.Quantity });
         }
     }

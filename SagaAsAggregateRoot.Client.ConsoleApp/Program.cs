@@ -1,7 +1,6 @@
 ﻿using NServiceBus;
 using SagaAsAggregateRoot.Shared.Messages.Commands;
 using System;
-using System.Security.Principal;
 using System.Threading.Tasks;
 
 namespace SagaAsAggregateRoot.Client.ConsoleApp
@@ -36,7 +35,7 @@ namespace SagaAsAggregateRoot.Client.ConsoleApp
             {
                 Console.WriteLine("Sending AssignKitToSubject");
                 await endpointInstance.Send(new AssignKitToSubject { KitId = kitId, SubjectId = Guid.NewGuid() });
-                await Task.Delay(7000);
+                await Task.Delay(3000);
             }
         }
     }
