@@ -10,7 +10,7 @@ namespace SagaAsAggregateRoot.Endpoint
         IAmStartedByMessages<ShipmentAcknowledged>,
         IHandleMessages<KitAssignedToSubject>
     {
-        private int kitResupplyThreshold = 3;
+        private const int KitResupplyThreshold = 3;
         private static readonly ILog Log = LogManager.GetLogger<KitResupplySaga>();
 
         protected override void ConfigureHowToFindSaga(SagaPropertyMapper<SagaData> mapper)
@@ -44,7 +44,7 @@ namespace SagaAsAggregateRoot.Endpoint
             Data.AvailableQuantity -= 1;
             Log.Info($"Available quantity is now {Data.AvailableQuantity}");
 
-            if (Data.AvailableQuantity <= kitResupplyThreshold)
+            if (Data.AvailableQuantity <= KitResupplyThreshold)
             {
                 //did we receive a ShipmentAcknowledged message based on the last ResupplyThresholdReached sent? If not, then there is a fulfillment problem, and we should keep assigning the remaing site supply
                 if (Data.LastShipmentAcknowledgedReceived < Data.LastResupplyThresholdReachedSent)
