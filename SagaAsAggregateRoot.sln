@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		todo.txt = todo.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SagaAsAggregateRoot.Fulfillment.Endpoint", "SagaAsAggregateRoot.Fulfillment.Endpoint\SagaAsAggregateRoot.Fulfillment.Endpoint.csproj", "{27E72ACC-7043-4CAC-9395-184A6994A136}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{19356BAF-D3C4-4F2B-9030-48648314047B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19356BAF-D3C4-4F2B-9030-48648314047B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19356BAF-D3C4-4F2B-9030-48648314047B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27E72ACC-7043-4CAC-9395-184A6994A136}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27E72ACC-7043-4CAC-9395-184A6994A136}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27E72ACC-7043-4CAC-9395-184A6994A136}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27E72ACC-7043-4CAC-9395-184A6994A136}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -36,7 +36,7 @@ namespace SagaAsAggregateRoot.Client.ConsoleApp
             {
                 Console.WriteLine("Sending AssignKitToSubject");
                 await endpointInstance.Send(new AssignKitToSubject { KitId = kitId, SubjectId = Guid.NewGuid() });
-                await Task.Delay(7000);
+                await Task.Delay(3000);
             }
         }
     }
